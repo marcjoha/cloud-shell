@@ -1,0 +1,11 @@
+#!/bin/sh
+
+# File to remove
+file="/etc/profile.d/init_help.sh"
+
+if [ -f $file ] ; then
+    rm $file
+fi
+
+apt-get update
+apt-get -y install awscli
