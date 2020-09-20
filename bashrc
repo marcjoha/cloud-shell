@@ -126,10 +126,6 @@ fi
 # add kubectl bash completions
 source <(kubectl completion bash)
 
-if [ -z "$DEVSHELL_PROJECT" ]; then
-  gcloud config set project marcus-bench &> /dev/null
-fi
-
 # remove username and host from prompt
 PS1="\[\033[1;34m\]\w$([[ -n \$DEVSHELL_PROJECT_ID ]] && printf " \[\033[1;33m\](%s)" \${DEVSHELL_PROJECT_ID} )\[\033[00m\] "
 
@@ -143,7 +139,7 @@ function get_cluster_short() {
   fi  
 }
 KUBE_PS1_CLUSTER_FUNCTION=get_cluster_short
-PS1=$PS1"$(kube_ps1) \$ "
+PS1=$PS1'$(kube_ps1) \$ '
 
 # add my bin to path
 PATH="/home/majohansson/bin:$PATH"
