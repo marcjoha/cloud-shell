@@ -143,7 +143,7 @@ function get_cluster_short() {
   fi  
 }
 KUBE_PS1_CLUSTER_FUNCTION=get_cluster_short
-PS1=$PS1'$(kube_ps1) \$ '
+PS1=$PS1"$(kube_ps1) \$ "
 
 # add my bin to path
 PATH="/home/majohansson/bin:$PATH"
