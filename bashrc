@@ -123,13 +123,15 @@ fi
 
 # my customizations
 
+# add my bin to path
+PATH="/home/majohansson/bin:$PATH"
+
 # add kubectl bash completions
 source <(kubectl completion bash)
 
-# remove username and host from prompt
-PS1='\[\033[1;34m\]\w$([[ -n $DEVSHELL_PROJECT_ID ]] && printf " \[\033[1;33m\](%s)" ${DEVSHELL_PROJECT_ID} )\[\033[00m\] '
+# everything from here and below is to fix the prompt and tab title
 
-# append k8s cluster (capped at 25 chars) and namespace
+# set up kube-ps1
 source /home/majohansson/tools/kube-ps1/kube-ps1.sh
 KUBE_PS1_SYMBOL_ENABLE=false
 CLUSTER_MAX_LENGTH=25
@@ -139,8 +141,46 @@ function get_cluster_short() {
   fi  
 }
 KUBE_PS1_CLUSTER_FUNCTION=get_cluster_short
-PS1=$PS1'$(kube_ps1) \$ '
 
-# add my bin to path
-PATH="/home/majohansson/bin:$PATH"
+# everything below is copied (and changed slightly) from /google/devshell/bashrc.google
 
+export PS1='\[\e]0;${DEVSHELL_PROJECT_ID:-Cloud Shell}\a\]'
+# Prompt that looks like `codr@cloudshell:~/google $`
+# or if the project is set `codr@cloudshell:~/google (cool-project) $`
+export PS1+='\[\033[1;34m\]\w$([[ -n $DEVSHELL_PROJECT_ID ]] && printf " \[\033[1;33m\](%s)" ${DEVSHELL_PROJECT_ID} )\[\033[00m\] '
+if [[ -n $TMUX ]]; then
+  export PS1+='\[\033k$([[ -n $DEVSHELL_PROJECT_ID ]] && printf "%s" ${DEVSHELL_PROJECT_ID} || printf "cloudshell")\033\\\]'
+fi
+
+export PS1+='$(kube_ps1) \$ '
+
+# Updates DEVSHELL_PROJECT_ID environment variable to the current project ID
+# stored in the session configuration area.
+update_devshell_project_id () {
+  # If the gcloud sentinal file exists, that means a configuration changed.
+  # The file will not exists until `gcloud config set` is called.
+  if [[ -e $CLOUDSDK_CONFIG/config_sentinel ]]; then
+    local project_id
+    project_id=$(get_gcloud_config_property 'core' 'project')
+    if [[ -z "${project_id}" ]]; then
+      unset DEVSHELL_PROJECT_ID
+      unset GOOGLE_CLOUD_PROJECT
+    else
+      export DEVSHELL_PROJECT_ID=${project_id}
+      export GOOGLE_CLOUD_PROJECT=$DEVSHELL_PROJECT_ID
+    fi  
+
+    # rm so we will not read the config each time.
+    rm -f $CLOUDSDK_CONFIG/config_sentinel
+  fi  
+}
+export PROMPT_COMMAND="${PROMPT_COMMAND:+$PROMPT_COMMAND ; }"
+export PROMPT_COMMAND+="update_devshell_project_id &> /dev/null"
+
+# Flush commands to the history file on every prompt, but skip for the first
+# prompt to improve startup performance.
+ORIGINAL_PROMPT_COMMAND=$PROMPT_COMMAND
+function enableHistoryAppend() {
+  export PROMPT_COMMAND="history -a;$ORIGINAL_PROMPT_COMMAND"
+}
+export PROMPT_COMMAND="enableHistoryAppend &> /dev/null;$ORIGINAL_PROMPT_COMMAND"

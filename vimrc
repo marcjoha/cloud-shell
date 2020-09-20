@@ -10,4 +10,4 @@ set lazyredraw          " redraw only when we need to.
 set showmatch           " highlight matching [{()}]
 set incsearch           " search as characters are entered
 set nohlsearch          " dont' highlight matches
-set mouse=a             " allos for highlighting text with mouse
+set mouse-=a            " disable automatic mouse, it doesnt work well with Cloud Shell's copy paste
