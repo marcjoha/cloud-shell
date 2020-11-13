@@ -132,7 +132,7 @@ source <(kubectl completion bash)
 # everything from here and below is to fix the prompt and tab title
 
 # set up kube-ps1
-source /home/majohansson/tools/kube-ps1/kube-ps1.sh
+source /home/majohansson/bin/kube-ps1.sh
 KUBE_PS1_SYMBOL_ENABLE=false
 CLUSTER_MAX_LENGTH=25
 function get_cluster_short() {
