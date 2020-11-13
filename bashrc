@@ -184,3 +184,6 @@ function enableHistoryAppend() {
   export PROMPT_COMMAND="history -a;$ORIGINAL_PROMPT_COMMAND"
 }
 export PROMPT_COMMAND="enableHistoryAppend &> /dev/null;$ORIGINAL_PROMPT_COMMAND"
+
+# Add path to local terraform deployment (version bundled in Cloud Shell is too old)
+export PATH="$HOME/.tfenv/bin:$PATH"
