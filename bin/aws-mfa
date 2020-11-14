@@ -25,7 +25,7 @@ if [ ! -z "$OUTPUT" ]; then
   sed -ie "9s|.*|aws_secret_access_key = $SECRET|" ~/.aws/credentials
   sed -ie "10s|.*|aws_session_token = $SESSION|" ~/.aws/credentials
 
-  if [ "$AWS_PROFILE" = "$PROFILE-mfa" ]; then
+  if [ "$AWS_PROFILE" != "$PROFILE-mfa" ]; then
     echo "Switch to the MFA profile by running:"
     echo "  export AWS_PROFILE=$PROFILE-mfa"
   fi

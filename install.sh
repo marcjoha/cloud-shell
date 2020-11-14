@@ -3,8 +3,11 @@ CWD=`pwd`
 
 # Set up binaries
 mkdir -p ~/bin
+
 ln -sf $CWD/bin/kube-ps1.sh  ~/bin/kube-ps1.sh
+chmod a+x $CWD/bin/kube-ps1.sh
 ln -sf $CWD/bin/aws-mfa  ~/bin/aws-mfa
+chmod a+x $CWD/bin/aws-mfa
 
 # Symlink all dotfiles
 ln -sf $CWD/dotfiles/customize_environment  ~/.customize_environment
