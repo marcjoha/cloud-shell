@@ -1,0 +1,34 @@
+#!/bin/bash
+
+if [ $# -eq 0 ]; then
+  echo "Missing MFA pin code"
+  exit 1
+fi
+
+SERIAL_NUMBER=arn:aws:iam::966891400085:mfa/majohansson@google.com
+PROFILE=default
+
+OUTPUT=$(aws sts get-session-token \
+--serial-number $SERIAL_NUMBER \
+--profile $PROFILE \
+--output text \
+--token-code $1)
+
+if [ ! -z "$OUTPUT" ]; then
+
+  ACCESS=$(echo $OUTPUT | awk '{print $2}')
+  SECRET=$(echo $OUTPUT | awk '{print $4}')
+  SESSION=$(echo $OUTPUT | awk '{print $5}')
+
+  # Update the line numbers, 12-14 to reflect your specific credentials file
+  sed -ie "8s|.*|aws_access_key_id = $ACCESS|" ~/.aws/credentials
+  sed -ie "9s|.*|aws_secret_access_key = $SECRET|" ~/.aws/credentials
+  sed -ie "10s|.*|aws_session_token = $SESSION|" ~/.aws/credentials
+
+  if [ "$AWS_PROFILE" = "$PROFILE-mfa" ]; then
+    echo "Switch to the MFA profile by running:"
+    echo "  export AWS_PROFILE=$PROFILE-mfa"
+  fi
+
+fi
+
