@@ -7,5 +7,6 @@ if [ -f $file ] ; then
     rm $file
 fi
 
-apt-get update
-apt-get -y install awscli
+# apt-get update
+
+pip install -U awscli
