@@ -6,7 +6,6 @@ rm ~/README-cloudshell.txt &> /dev/null
 
 # Set up binaries
 mkdir -p ~/bin
-
 ln -sf $CWD/bin/kube-ps1.sh  ~/bin/kube-ps1.sh
 chmod a+x $CWD/bin/kube-ps1.sh
 ln -sf $CWD/bin/aws-mfa  ~/bin/aws-mfa
