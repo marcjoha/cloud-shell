@@ -4,7 +4,6 @@ CWD=`pwd`
 # Clean up
 rm ~/README-cloudshell.txt &> /dev/null
 
-
 # Set up binaries
 mkdir -p ~/bin
 
