@@ -20,7 +20,7 @@ if [ ! -z "$OUTPUT" ]; then
   SECRET=$(echo $OUTPUT | awk '{print $4}')
   SESSION=$(echo $OUTPUT | awk '{print $5}')
 
-  # Update the line numbers, 12-14 to reflect your specific credentials file
+  # Update the line numbers 8-10 to reflect your specific credentials file
   sed -ie "8s|.*|aws_access_key_id = $ACCESS|" ~/.aws/credentials
   sed -ie "9s|.*|aws_secret_access_key = $SECRET|" ~/.aws/credentials
   sed -ie "10s|.*|aws_session_token = $SESSION|" ~/.aws/credentials
