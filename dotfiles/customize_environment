@@ -2,8 +2,5 @@
 
 rm /etc/profile.d/init_help.sh &> /dev/null
 
-pip3 install -U awscliv2
-
-awsv2 --install
-
+pip3 install -U awscli
 pip3 install -U aws-mfa
