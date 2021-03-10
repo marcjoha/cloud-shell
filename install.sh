@@ -1,9 +1,6 @@
 #!/bin/bash
 CWD=`pwd`
 
-# Clean up
-rm ~/README-cloudshell.txt &> /dev/null
-
 # Create base folders
 mkdir -p ~/.cloudshell
 mkdir -p ~/bin
