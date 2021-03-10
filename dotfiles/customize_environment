@@ -2,6 +2,6 @@
 
 rm /etc/profile.d/init_help.sh &> /dev/null
 
-apt-get -y update
+apt-get update
 
 pip install -U awscli
