@@ -8,8 +8,9 @@ rm ~/README-cloudshell.txt &> /dev/null
 mkdir -p ~/.cloudshell
 mkdir -p ~/bin
 
-# Remove apt-get warning
+# Remove various warnings
 touch ~/.cloudshell/no-apt-get-warning
+touch ~/.cloudshell/no-pip-warning
 
 # Install some binaries
 ln -sf $CWD/bin/kube-ps1.sh  ~/bin/kube-ps1.sh
