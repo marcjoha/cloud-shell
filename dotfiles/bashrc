@@ -187,7 +187,3 @@ export PROMPT_COMMAND="enableHistoryAppend &> /dev/null;$ORIGINAL_PROMPT_COMMAND
 
 # Add path to local terraform deployment (version bundled in Cloud Shell is too old)
 export PATH="$HOME/.tfenv/bin:$PATH"
-
-# aliasing because https://pypi.org/project/awscliv2/
-alias aws='awsv2'
-
