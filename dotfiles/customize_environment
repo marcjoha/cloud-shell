@@ -2,7 +2,4 @@
 
 rm /etc/profile.d/init_help.sh &> /dev/null
 
-apt-get update
-
-pip install -U awscli
-pip install -U aws-mfa
+pip3 install -U aws-mfa
